@@ -1,6 +1,6 @@
-# 🎧 Arabic Audio Understanding System
+# 🎧 Al Dalil (الدليل)
 
-A deep learning-based system for Arabic audio understanding that combines **Speech Recognition**, **Text Summarization**, and **Semantic Search** into a unified pipeline.
+**Al Dalil** is a deep learning-based system for Arabic audio understanding that combines **Speech Recognition**, **Text Summarization**, and **Semantic Search** into a unified pipeline.
 
 ## 📋 Pipeline
 

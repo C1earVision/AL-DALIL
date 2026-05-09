@@ -185,7 +185,7 @@ def create_app():
     """
 
     with gr.Blocks(
-        title="Arabic Audio Understanding System",
+        title="Al Dalil - Arabic Audio Understanding System",
         css=custom_css,
         theme=gr.themes.Soft(
             primary_hue="blue",
@@ -196,8 +196,8 @@ def create_app():
         # Header
         gr.Markdown(
             """
-            # Arabic Audio Understanding System
-            ### Speech Recognition · Text Summarization · Semantic Search
+            # 🎧 Al Dalil (الدليل)
+            ### Arabic Speech Recognition · Text Summarization · Semantic Search
             """
         )
 
@@ -391,7 +391,7 @@ def create_app():
             """
             ---
             <div style="text-align: center; color: #95a5a6; font-size: 12px;">
-            Arabic Audio Understanding System — NLP Project 2<br>
+            Al Dalil — NLP Project 2<br>
             Pipeline: Audio → Whisper ASR (Groq) → Text → LLM Summarization (Groq) → Embeddings → FAISS Search
             </div>
             """
