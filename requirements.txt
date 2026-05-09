@@ -1,0 +1,8 @@
+groq
+transformers
+sentence-transformers
+faiss-cpu
+gradio
+librosa
+soundfile
+numpy
