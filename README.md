@@ -1,3 +1,15 @@
+---
+title: Al Dalil
+emoji: 🎧
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 5.0.0
+app_file: app.py
+pinned: false
+license: mit
+---
+
 # 🎧 Al Dalil (الدليل)
 
 **Al Dalil** is a deep learning-based system for Arabic audio understanding that combines **Speech Recognition**, **Text Summarization**, and **Semantic Search** into a unified pipeline.

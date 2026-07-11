@@ -6,3 +6,4 @@ gradio
 librosa
 soundfile
 numpy
+python-dotenv

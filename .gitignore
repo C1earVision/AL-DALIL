@@ -48,4 +48,3 @@ venv.bak/
 Thumbs.db
 
 # Project specific / Sensitive
-config.py
