@@ -1,3 +1,8 @@
+try:
+    import spaces
+except ImportError:
+    pass
+
 import gradio as gr
 
 from modules.asr import ArabicASR

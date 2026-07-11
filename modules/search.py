@@ -1,3 +1,12 @@
+try:
+    import spaces
+except ImportError:
+    # Mock decorator for local CPU development
+    class spaces:
+        @staticmethod
+        def GPU(func):
+            return func
+
 import time
 import re
 import numpy as np
@@ -16,17 +25,6 @@ from config import (
     SEARCH_TOP_K,
     SEARCH_CHUNK_SIZE,
 )
-
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-
-try:
-    import spaces
-except ImportError:
-    # Mock decorator for local CPU development
-    class spaces:
-        @staticmethod
-        def GPU(func):
-            return func
 
 # Global cached model
 _model = None
@@ -74,8 +72,7 @@ class SemanticSearch:
         if self.is_loaded:
             return
 
-        print(f"[Search] Pre-loading embedding model...")
-        get_model()
+        print(f"[Search] Pre-loading embedding model placeholder...")
         self.is_loaded = True
 
 
