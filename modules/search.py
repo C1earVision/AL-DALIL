@@ -19,10 +19,49 @@ from config import (
 
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 
+try:
+    import spaces
+except ImportError:
+    # Mock decorator for local CPU development
+    class spaces:
+        @staticmethod
+        def GPU(func):
+            return func
+
+# Global cached model
+_model = None
+
+def get_model():
+    global _model
+    if _model is None:
+        # On ZeroGPU, the GPU is only visible inside the @spaces.GPU decorated functions
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"[Search] Initializing SentenceTransformer model on {device}...")
+        _model = SentenceTransformer(EMBEDDING_MODEL_NAME, device=device)
+    return _model
+
+@spaces.GPU
+def encode_chunks_gpu(chunks):
+    model = get_model()
+    return model.encode(
+        chunks,
+        show_progress_bar=True,
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    )
+
+@spaces.GPU
+def encode_query_gpu(query):
+    model = get_model()
+    return model.encode(
+        [query],
+        convert_to_numpy=True,
+        normalize_embeddings=True,
+    )
+
 
 class SemanticSearch:
     def __init__(self):
-        self.model = None
         self.model_name = EMBEDDING_MODEL_NAME
         self.is_loaded = False
 
@@ -35,14 +74,10 @@ class SemanticSearch:
         if self.is_loaded:
             return
 
-        print(f"[Search] Loading embedding model: {self.model_name}...")
-        start = time.time()
-
-        self.model = SentenceTransformer(self.model_name, device=DEVICE)
-
+        print(f"[Search] Pre-loading embedding model...")
+        get_model()
         self.is_loaded = True
-        elapsed = time.time() - start
-        print(f"[Search] Model loaded in {elapsed:.1f}s")
+
 
     def _split_into_chunks(self, text: str, chunk_size: int = None) -> list[str]:
         if chunk_size is None:
@@ -85,12 +120,7 @@ class SemanticSearch:
                 "processing_time": 0.0,
             }
 
-        self.embeddings = self.model.encode(
-            self.chunks,
-            show_progress_bar=True,
-            convert_to_numpy=True,
-            normalize_embeddings=True,
-        )
+        self.embeddings = encode_chunks_gpu(self.chunks)
 
         dim = self.embeddings.shape[1]
         self.index = faiss.IndexFlatIP(dim)
@@ -116,11 +146,7 @@ class SemanticSearch:
 
         top_k = min(top_k, len(self.chunks))
 
-        query_embedding = self.model.encode(
-            [query],
-            convert_to_numpy=True,
-            normalize_embeddings=True,
-        )
+        query_embedding = encode_query_gpu(query)
 
         scores, indices = self.index.search(query_embedding.astype(np.float32), top_k)
 
