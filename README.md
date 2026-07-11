@@ -10,6 +10,9 @@ pinned: false
 license: mit
 ---
 
+# Live Demo
+https://huggingface.co/spaces/Ahmed32323/Al-Dalil
+
 # 🎧 Al Dalil (الدليل)
 
 **Al Dalil** is a deep learning-based system for Arabic audio understanding that combines **Speech Recognition**, **Text Summarization**, and **Semantic Search** into a unified pipeline.
