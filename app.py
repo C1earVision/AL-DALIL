@@ -392,16 +392,6 @@ def create_app():
                 outputs=[search_results],
             )
 
-        gr.Markdown(
-            """
-            ---
-            <div style="text-align: center; color: #95a5a6; font-size: 12px;">
-            Al Dalil — NLP Project 2<br>
-            Pipeline: Audio → Whisper ASR (Groq) → Text → LLM Summarization (Groq) → Embeddings → FAISS Search
-            </div>
-            """
-        )
-
     return app
 
 
